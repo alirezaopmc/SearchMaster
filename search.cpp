@@ -41,29 +41,29 @@ std::string token;
 int main()
 {
     trie db;
-    db.insert("t");
-    db.insert("thet");
-    db.insert("theT");
-    db.insert("theSe");
-    db.insert("theSS");
-
-
-
-    for(int i = 0; i < 26 * 2; i++) {
-        if (db.root->next[i] != nullptr) {
-            std::cout << "YES" << std::endl;
-            std::cout << (char)((i < 26 ? 'a' : 'A')+i % 26) << endl;
-        }
-    }
-
-    std::cout << "Before" << std::endl;
-    auto v = db.search("the");
-    std::cout << "After" << std::endl;
-
-    std::cout << v.size() << std::endl;
-    printStringVector(v);
-
-    return 0;
+//    db.insert("t");
+//    db.insert("thet");
+//    db.insert("theT");
+//    db.insert("theSe");
+//    db.insert("theSS");
+//
+//
+//
+//    for(int i = 0; i < 26 * 2; i++) {
+//        if (db.root->next[i] != nullptr) {
+//            std::cout << "YES" << std::endl;
+//            std::cout << (char)((i < 26 ? 'a' : 'A')+i % 26) << endl;
+//        }
+//    }
+//
+//    std::cout << "Before" << std::endl;
+//    auto v = db.search("the");
+//    std::cout << "After" << std::endl;
+//
+//    std::cout << v.size() << std::endl;
+//    printStringVector(v);
+//
+//    return 0;
     system("COLOR B5"); 
 
     clear();

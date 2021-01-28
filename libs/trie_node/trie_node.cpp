@@ -23,7 +23,7 @@ indexChar
     else return (char)(i % 26 + 'A');
 }
 
-template <typename T> void
+template<typename T> void
 insertVector
 (std::vector<T>& storage, std::vector<T>& stack)
 {
@@ -35,7 +35,7 @@ insertVector
 trie_node::trie_node
 ()
 {
-    next = (trie_node **) malloc(26 * 2 * sizeof(trie_node));
+    next = (trie_node **) malloc(26 * 2 * sizeof(trie_node *));
     for(int i = 0; i < 26; i++) {
         next[i] = nullptr;
     }
