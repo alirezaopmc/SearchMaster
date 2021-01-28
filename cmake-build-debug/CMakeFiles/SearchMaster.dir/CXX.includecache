@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+D:/Projects/SearchMaster/libs/trie_node/trie_node.cpp
+iostream
+-
+stdexcept
+-
+./trie_node.hpp
+D:/Projects/SearchMaster/libs/trie_node/trie_node.hpp
+
+D:/Projects/SearchMaster/libs/trie_node/trie_node.hpp
+vector
+-
+iostream
+-
+

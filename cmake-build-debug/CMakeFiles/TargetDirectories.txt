@@ -1,0 +1,3 @@
+D:/Projects/SearchMaster/cmake-build-debug/CMakeFiles/SearchMaster.dir
+D:/Projects/SearchMaster/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/Projects/SearchMaster/cmake-build-debug/CMakeFiles/rebuild_cache.dir

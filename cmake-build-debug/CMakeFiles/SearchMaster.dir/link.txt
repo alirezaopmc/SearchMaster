@@ -1,0 +1,3 @@
+"C:\Program Files\JetBrains\CLion 2020.3.1\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\SearchMaster.dir/objects.a
+C:\MinGW-w64\bin\ar.exe cr CMakeFiles\SearchMaster.dir/objects.a @CMakeFiles\SearchMaster.dir\objects1.rsp
+C:\MinGW-w64\bin\g++.exe -g   -Wl,--whole-archive CMakeFiles\SearchMaster.dir/objects.a -Wl,--no-whole-archive  -o SearchMaster.exe -Wl,--out-implib,libSearchMaster.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\SearchMaster.dir\linklibs.rsp
