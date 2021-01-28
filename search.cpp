@@ -20,7 +20,7 @@ using namespace std;
 #define clrscr() printf("\033[H\033[J")
 #define gotoxy(x,y) printf("\033[%d;%dH", (y), (x))
 
-const int N = 10000;
+int cursor = 1;
 
 int CONSOLE_WIDTH, CONSOLE_HEIGHT;
 bool running = false;
@@ -73,63 +73,28 @@ int main()
 
     // std::cout << CONSOLE_WIDTH << endl;
     // std::cout << CONSOLE_HEIGHT << endl;
-    
-    header();
 
     while(running) {
-        char c = getch();
+        std::string input;
+        std::cin >> input;
 
-        if (c == '0') {
-            clrscr();
-            std::cout << "Exited" << std::endl;
+        if (input[0] == '+') {
+            db.root->insert(input.substr(1));
+        }
+
+        if (input[0] == '?') {
+            auto suggestions = db.root->getSimilar(input.substr(1), "");
+
+            std::sort(suggestions.begin(), suggestions.end());
+
+            printf("[\n");
+            for(const auto& suggestion : suggestions)
+                std::cout << '\t' << suggestion.second << std::endl;
+            printf("]\n");
+        }
+
+        if (input[0] == '.') {
             running = false;
-            continue;
-        }
-
-        if (
-                ! isalpha(c)
-                && c != '\r'
-                && c != ' '
-                && c != '\b'
-        ) continue;
-
-        if (c == '\r')
-        {
-            space = false;
-            if (!token.empty()) tokens.push_back(token);
-            token = "";
-            update();
-            header();
-            gotoxy(1, 2);
-        }
-        else if (c == ' ' && !space)
-        {
-            space = true;
-            tokens.push_back(token);
-            token = "";
-            header();
-            showLine();
-        }
-        else if (c == '\b')
-        {
-            space = false;
-            if (token.length() > 0)
-            {
-                token.pop_back();
-            }
-            else if (!tokens.empty())
-            {
-                token = tokens[tokens.size() - 1];
-                tokens.pop_back();
-            }
-
-            if (!tokens.empty() || !token.empty()) render();
-        }
-        else if (!space)
-        {
-            token += c;
-            showLine();
-            render();
         }
     }
 
