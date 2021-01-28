@@ -20,9 +20,9 @@ public:
     insert
     (std::string word) const;
 
-    std::vector<std::string>
+    std::vector<std::pair<int, std::string>>
     search
-    (std::string word) const;
+    (const std::string& word) const;
 
 };
 

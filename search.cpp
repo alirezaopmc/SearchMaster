@@ -1,25 +1,23 @@
-#include <stdio.h>
 #include <conio.h>
-#include <stdlib.h>
 #include <iostream>
-#include <string.h>
 #include <Windows.h>
 #include <vector>
+#include <algorithm>
 
 #include "./libs/trie/trie.hpp"
 
 void
 printStringVector
-(std::vector<std::string> v, std::string end = "")
+(std::vector<std::pair<int, std::string>> v, std::string end = " ")
 {
     std::cout << "Printing a vector" << std::endl;
-    for(auto s : v) std::cout << s << " ";
+    for(const auto& s : v) std::cout << s.first << " " << s.second << end;
     std::cout << std::endl;
 }
 
 using namespace std;
 
-#define clear() printf("\033[H\033[J")
+#define clrscr() printf("\033[H\033[J")
 #define gotoxy(x,y) printf("\033[%d;%dH", (y), (x))
 
 const int N = 10000;
@@ -31,18 +29,21 @@ void init();
 void getScreenInfo();
 void header();
 void render(); // Pressing Enter
-void hint();
 void update();
 void showLine();
 
+void hint(const std::vector<std::pair<int, std::string>>& suggestions);
+
 std::vector<std::string> tokens;
 std::string token;
+trie db;
+bool space = false;
 
 int main()
 {
-    trie db;
 //    db.insert("t");
 //    db.insert("thet");
+//    db.insert("theT");
 //    db.insert("theT");
 //    db.insert("theSe");
 //    db.insert("theSS");
@@ -64,9 +65,9 @@ int main()
 //    printStringVector(v);
 //
 //    return 0;
-    system("COLOR B5"); 
 
-    clear();
+//    system("COLOR B5");
+    clrscr();
     
     init();
 
@@ -77,31 +78,58 @@ int main()
 
     while(running) {
         char c = getch();
-        if (c == '\r') {
+
+        if (c == '0') {
+            clrscr();
+            std::cout << "Exited" << std::endl;
+            running = false;
+            continue;
+        }
+
+        if (
+                ! isalpha(c)
+                && c != '\r'
+                && c != ' '
+                && c != '\b'
+        ) continue;
+
+        if (c == '\r')
+        {
+            space = false;
+            if (!token.empty()) tokens.push_back(token);
+            token = "";
             update();
             header();
             gotoxy(1, 2);
-        } else if (c == '0') {
-            clear();
-            break;
-        } else if (c == ' ') {
+        }
+        else if (c == ' ' && !space)
+        {
+            space = true;
             tokens.push_back(token);
             token = "";
             header();
             showLine();
-        } else if (c == '\b') {
-            if (token.length() > 0) {
+        }
+        else if (c == '\b')
+        {
+            space = false;
+            if (token.length() > 0)
+            {
                 token.pop_back();
-            } else {
+            }
+            else if (!tokens.empty())
+            {
                 token = tokens[tokens.size() - 1];
                 tokens.pop_back();
             }
-            printf("\b \b");
-            render();
-        } else {
+
+            if (!tokens.empty() || !token.empty()) render();
+        }
+        else if (!space)
+        {
             token += c;
+            showLine();
             render();
-            printf("%c", c);
         }
     }
 
@@ -121,28 +149,52 @@ void getScreenInfo() {
 }
 
 void header() {
-    clear();
-    cout << "Enter your word. Press 0 key to exit." << endl;
+    clrscr();
+    cout << "Search Master Interactive terminal. (Press 0 to exit)" << endl;
 }
 
 void render() {
     if (token.length() == 0) return;
 
-    std::vector<std::string> similar;
-    
-    
+    auto similar = db.root->getSimilar(token, "");
+
+    std::sort(similar.begin(), similar.end());
+
+    hint(similar);
 }
 
-void hint() {
-
-}
-
-void update() {
-
-}
-
-void showLine() {
-    for(auto t : tokens) {
-        cout << t << " ";
+void
+hint
+(const std::vector<std::pair<int, std::string>>& suggestions)
+{
+    clrscr();
+    header();
+    showLine();
+    gotoxy(1, 3);
+    for(const auto& suggest : suggestions) {
+        std::cout << suggest.second << " ";
     }
+
+    int n = 0;
+    for(const auto& tkn : tokens)
+        n += tkn.size();
+
+    n += tokens.size();
+    gotoxy(n, 2);
+}
+
+void update()
+{
+    for(const auto& tkn : tokens)
+        db.root->insert(tkn);
+
+    tokens.clear();
+}
+
+void showLine()
+{
+    for(const auto& tkn : tokens)
+        cout << tkn << " ";
+    cout << '\b';
+    if (space) cout << ' ';
 }

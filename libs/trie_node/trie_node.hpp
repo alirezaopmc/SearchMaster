@@ -44,11 +44,11 @@ public:
     (std::string word);
 
 
-    std::vector<std::string>
+    std::vector<std::pair<int, std::string>>
     getSimilar
     (std::string word, std::string prefix) const;
     
-    std::vector<std::string>
+    std::vector<std::pair<int, std::string>>
     getChildren
     (const std::string& prefix) const;
 };

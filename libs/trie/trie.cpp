@@ -15,9 +15,9 @@ trie::insert
     root->insert(std::move(word));
 }
 
-std::vector<std::string>
+std::vector<std::pair<int, std::string>>
 trie::search
-(std::string word) const
+(const std::string& word) const
 {
-    return root->getSimilar(std::move(word), "");
+    return root->getSimilar(word, "");
 }

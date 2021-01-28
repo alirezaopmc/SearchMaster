@@ -10,7 +10,7 @@ charIndex
     if ('a' <= c && c <= 'z') return c - 'a';
     if ('A' <= c && c <= 'Z') return c - 'A' + 26;
 
-    std::cout << "Hello" << std::endl;
+    std::cout << "Error trie_node.cpp:13" << std::endl;
 
     return 0;
 }
@@ -125,14 +125,14 @@ trie_node::insert
 
     if(next[i] == nullptr) {
         next[i] = new trie_node();
-        std::cout << "NEW TRIE NODE " << (char)(i < 26 ? 'a' + i : 'A' + i % 26) << std::endl;
+//        std::cout << "NEW TRIE NODE " << (char)(i < 26 ? 'a' + i : 'A' + i % 26) << std::endl;
     }
 
     next[i]->insert(word.substr(1, word.size() - 1));
 }
 
 
-std::vector<std::string>
+std::vector<std::pair<int, std::string>>
 trie_node::getSimilar
 (std::string word, std::string prefix) const
 {
@@ -149,24 +149,25 @@ trie_node::getSimilar
             ?
             next[index]->getSimilar(word.substr(1, word.size()), prefix)
             :
-            std::vector<std::string>();
+            std::vector<std::pair<int, std::string>>();
    } 
 }
 
 
-std::vector<std::string>
-trie_node::getChildren(const std::string& prefix) const
+std::vector<std::pair<int, std::string>>
+trie_node::getChildren
+(const std::string& prefix) const
 {
-    std::cout << prefix << std::endl;
-    std::vector<std::string> children;
+//    std::cout << prefix << std::endl;
+    std::vector<std::pair<int, std::string>> children;
 
     if (lastChar) {
-        children.push_back(prefix);
+        children.emplace_back(cnt, prefix);
     }
 
     for(int i = 0; i < 2 * 26; i++) {
         if (next[i] != nullptr) {
-            std::cout << "=>" << indexChar(i) << std::endl;
+//            std::cout << "=>" << indexChar(i) << std::endl;
             auto nextChildren
                 =
             next[i]->getChildren(prefix + indexChar(i));

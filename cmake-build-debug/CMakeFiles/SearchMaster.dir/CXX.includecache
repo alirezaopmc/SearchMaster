@@ -6,17 +6,33 @@
 
 #IncludeRegexTransform: 
 
-D:/Projects/SearchMaster/libs/trie_node/trie_node.cpp
-iostream
--
-stdexcept
--
-./trie_node.hpp
+D:/Projects/SearchMaster/libs/trie/trie.hpp
+../trie_node/trie_node.hpp
 D:/Projects/SearchMaster/libs/trie_node/trie_node.hpp
+iostream
+D:/Projects/SearchMaster/libs/trie/iostream
 
 D:/Projects/SearchMaster/libs/trie_node/trie_node.hpp
 vector
 -
 iostream
 -
+
+D:/Projects/SearchMaster/search.cpp
+stdio.h
+-
+conio.h
+-
+stdlib.h
+-
+iostream
+-
+string.h
+-
+Windows.h
+-
+vector
+-
+./libs/trie/trie.hpp
+D:/Projects/SearchMaster/libs/trie/trie.hpp
 
